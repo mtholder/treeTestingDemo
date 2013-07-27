@@ -1,0 +1,9 @@
+#NEXUS
+BEGIN PAUP;
+    Execute ../primates-mtDNA.nex ;
+    GetTrees file = ../HCG.tre ;
+    LSet nst = 2 rates=gamma shape=0.43 basefreq=Emp trat = 4.5 ;
+    SaveTrees file = hgc.hky.branches.tre format = altnexus brlens ;
+    LScore / sitelike khtest=none scorefile = hcg.likescores.txt longfmt ;
+    PScore  / single=all scorefile = hgc.parscores.txt ;
+END;
