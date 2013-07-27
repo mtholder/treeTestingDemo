@@ -1,0 +1,13 @@
+#NEXUS
+BEGIN PAUP;
+    Log start file = hcg.paup.log append ;
+        Execute ../5-primates.nex ;
+        GetTrees file = 5-taxa-HCG.tre ;
+        ShowTrees all ;
+        LSet nst = 6 rmat = est rates = gamma shape = est basefreq = est pinv = 0.0; 
+        SaveTrees file = hgc.gtrgi.branches.tre format = altnexus brlens ;
+        LScore / sitelike khtest=none scorefile = hcg.likescores.txt longfmt ;
+        PScore  / single=all scorefile = hgc.parscores.txt ;
+    Log Stop; 
+    Quit ;
+END;
