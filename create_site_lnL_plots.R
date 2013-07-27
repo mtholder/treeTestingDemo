@@ -3,7 +3,6 @@ d = read.table(fn, header=TRUE, sep="\t");
 parsimony.discriminates = d$PTree1 != d$PTree2;
 pdf(paste(fn, '-diff-by-site.pdf', sep=""));
 diff = d$LTree1 - d$LTree2
-
 plot(d$Site, diff, 
      xlab="Site", ylab="lnL(T1) - lnL(T2)",
      type="p",

@@ -5,16 +5,16 @@ SCRIPT_NAME = os.path.split(os.path.abspath(sys.argv[0]))[1]
 def parse_paup_site_like_file(inp, score_type, is_parsimony=False):
 
     if is_parsimony:
-        expected_first = "Tree\tLength\tCharacter\tLength"
+        expected_first = re.compile(r"Tree\tLength\tCharacter\tLength")
     else:
-        expected_first = "Tree\t-lnL\tSite\t-lnL"
+        expected_first = re.compile(r"Tree\t-lnL\t.*Site\t-lnL")
 
     first = inp.next().strip()
-    if first != expected_first:
-        sys.exit('%s: Expecting "%s" as the first line, but found "%s"\n' % (SCRIPT_NAME, expected_first, first))
+    if not expected_first.match(first):
+        sys.exit('%s: Unexpected first line found "%s"\n' % (SCRIPT_NAME, first))
 
-    TREE_LIKE_PAT = re.compile(r'^(\d+)\t([.0-9]+)')
-    SITE_LIKE_PAT = re.compile(r'^\t\t(\d+)\t([.0-9]+)')
+    TREE_LIKE_PAT = re.compile(r'^(\d+)\t([-.0-9eE]+)\s.*')
+    SITE_LIKE_PAT = re.compile(r'^\t+(\d+)\t([-.0-9eE]+)')
     tree_site_ln_like_list = []
     curr_site_ln = []
     curr_site_ln_sum = 0.0
@@ -24,8 +24,9 @@ def parse_paup_site_like_file(inp, score_type, is_parsimony=False):
         if m:
             if len(curr_site_ln) > 0:
                 assert(len(tree_site_ln_like_list) + 1 == curr_tree_num)
-                if abs(expected_ln_like - curr_site_ln_sum) > 10-4:
-                    sys.exit('Tree ln L for tree %d disagrees with sum of site lnL.\n')
+                sys.stderr.write('expected_ln_like = ' + str(expected_ln_like) + '    curr_site_ln_sum = ' + str(curr_site_ln_sum) + '\n')
+                if abs(expected_ln_like - curr_site_ln_sum) > 0.0001:
+                    sys.exit('Tree ln L for tree %d disagrees with sum of site lnL.\n' % curr_tree_num)
                 tree_site_ln_like_list.append(curr_site_ln)
                 if num_sites == None:
                     num_sites = len(curr_site_ln)
@@ -42,13 +43,16 @@ def parse_paup_site_like_file(inp, score_type, is_parsimony=False):
             sn = int(m.group(1))
             sls = m.group(2)
             slf = score_type(sls)
+            if abs(slf) < 1.0e-9:
+                sls = '0.0'
             assert(sn == (1 + len(curr_site_ln)))
             curr_site_ln.append(sls)
             curr_site_ln_sum += slf
     if len(curr_site_ln) > 0:
         assert(len(tree_site_ln_like_list) + 1 == curr_tree_num)
-        if abs(expected_ln_like - curr_site_ln_sum) > 10-4:
-            sys.exit('Tree ln L for tree %d disagrees with sum of site lnL.\n')
+        sys.stderr.write('expected_ln_like = ' + str(expected_ln_like) + '    curr_site_ln_sum = ' + str(curr_site_ln_sum) + '\n')
+        if abs(expected_ln_like - curr_site_ln_sum) > 0.0001:
+            sys.exit('Tree ln L for tree %d disagrees with sum of site lnL.\n' % curr_tree_num)
         tree_site_ln_like_list.append(curr_site_ln)
         if num_sites == None:
             num_sites = len(curr_site_ln)
@@ -81,10 +85,14 @@ if __name__ == '__main__':
         suffix = ""
     lsc_part = '\tLTree'.join([str(1 +i) for i in range(num_trees)])
     outp.write('Site\tLTree%s%s\n' % (lsc_part, suffix))
+    if tree_site_ln_like_list[0][0] < 0.0:
+        js = '\t'
+    else:
+        js = '\t-'
     for i in range(num_sites):
         if pars_filename:
             suffix = '\t' + ('\t'.join([x[i] for x in tree_site_parsimony_list]))
         else:
             suffix = ""
-        lsc_part = '\t-'.join([x[i] for x in tree_site_ln_like_list])
-        outp.write('%d\t-%s%s\n' % (1 + i, lsc_part, suffix))
+        lsc_part = js.join([x[i] for x in tree_site_ln_like_list])
+        outp.write('%d%s%s%s\n' % (1 + i, js, lsc_part, suffix))

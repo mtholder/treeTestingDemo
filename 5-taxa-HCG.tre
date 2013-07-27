@@ -7,6 +7,6 @@ BEGIN TREES;
         4 Gorilla_gorilla_NC_011120,
         5 Pongo_pygmaeus_NC_001646
         ;
-    Tree HumanChimp = [&U] (1,(((2,3),4),5));
     Tree ChimpGorilla = [&U] (1,((2,(3,4)),5));
+    Tree HumanChimp = [&U] (1,(((2,3),4),5));
 END;
