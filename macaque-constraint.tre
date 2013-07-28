@@ -1,0 +1,4 @@
+#NEXUS 
+Begin trees;
+	tree mm = [&U] (Lemur_catta,(((((((Homo_sapiens,Pan),Gorilla),Pongo),Hylobates),(Macaca_fuscata,M._mulatta,M._fascicularis,M._sylvanus)),Saimiri_sciureus),Tarsius_syrichta));
+End;
