@@ -1,3 +1,5 @@
-        SaveTrees file = hcg.gtrgi.branches.tre format = altnexus brlens ;
-        LScore / sitelike khtest=none scorefile = hcg.likescores.txt longfmt ;
-        PScore  / single=all scorefile = hcg.parscores.txt ;
+SaveTrees file = hcg.gtrgi.branches.tre format = altnexus brlens replace;
+LScore / sitelike khtest=none scorefile = hcg.likescores.txt longfmt  replace;
+PScore  / single=all scorefile = hcg.parscores.txt replace;
+
+LScore / sitelike=no khtest=rell ;

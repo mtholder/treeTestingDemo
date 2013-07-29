@@ -2,8 +2,8 @@ hcg.gtrgi.branches.tre
 hcg.likescores.txt
 hcg.parscores.txt
 hcg.paup.log
-HCG.score.table.txt
-HCG.score.table.txt-diff-by-site.pdf
-HCG.score.table.txt-diff-histogram-cropped.pdf
-HCG.score.table.txt-diff-histogram.pdf
-HCG.score.table.txt-scatterplot.pdf
+hcg.score.table.txt
+hcg.score.table.txt-diff-by-site.pdf
+hcg.score.table.txt-diff-histogram-cropped.pdf
+hcg.score.table.txt-diff-histogram.pdf
+hcg.score.table.txt-scatterplot.pdf
