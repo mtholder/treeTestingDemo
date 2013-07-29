@@ -10,7 +10,8 @@ TreeDist ;
 LScore all / sitelike khtest=none scorefile = macaque.likescores.txt longfmt ;
 PScore  / single=all scorefile = macaque.parscores.txt ;
 
-LScore all / nositelike khtest ;
+LScore all / nositelike khtest = normal ;
+LScore all / nositelike khtest = rell ;
 
 LoadConstr  file = ../macaque-constraint.tre ;
 Generate all constraint = mm ;
