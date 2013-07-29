@@ -30,5 +30,17 @@ dev.off();
 
 mabs = max(abs(max(diff)), abs(min(diff)))
 pdf(paste(fn, '-diff-histogram.pdf', sep=""));
-hist(diff, seq(-mabs, mabs, mabs/75), xlab=c("lnL(T1) - lnL(T2)"), main="Distribution of the differences in lnL scores");
+hist(diff,
+    seq(-mabs, mabs, mabs/75),
+    xlab=c("lnL(T1) - lnL(T2)"),
+    main="Distribution of the differences in lnL scores");
+dev.off();
+
+mabs = max(abs(max(diff)), abs(min(diff)))
+pdf(paste(fn, '-diff-histogram-cropped.pdf', sep=""));
+hist(diff,
+    seq(-mabs, mabs, mabs/75),
+    xlab=c("lnL(T1) - lnL(T2)"),
+    ylim=c(0,300),
+    main="Distribution of the differences in lnL scores cropped at 300");
 dev.off();
