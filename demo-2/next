@@ -1,0 +1,18 @@
+SaveTrees file = macaque.hky.branches.tre format = altnexus brlens ;
+
+Set crit = like;
+HSearch nreps = 5 addseq = rand;
+ShowTrees all ;
+
+GetTrees file = ../macaque-null.tre mode = 7;
+TreeDist ;
+
+LScore all / sitelike khtest=none scorefile = macaque.likescores.txt longfmt ;
+PScore  / single=all scorefile = macaque.parscores.txt ;
+
+LScore all / nositelike khtest ;
+
+LoadConstr  file = ../macaque-constraint.tre ;
+Generate all constraint = mm ;
+LScore all / nokhtest shtest ;
+LScore all / nokhtest noshtest autest ;
