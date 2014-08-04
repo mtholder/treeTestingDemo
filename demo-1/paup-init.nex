@@ -1,9 +1,14 @@
 #NEXUS
 BEGIN PAUP;
-    Log start file = hcg.paup.log append;
-        Execute ../5-primates.nex ;
-        GetTrees file = ../5-taxa-HCG.tre ;
-        LSet nst = 6 rmat = est rates = gamma shape = est basefreq = est pinv = 0.0; 
-        ShowTrees all ;
+
+Log start file = hcg.paup.log append;
+
+Execute ../5-primates.nex ;
+
+GetTrees file = ../5-taxa-HCG.tre ;
+
+LSet nst = 6 rmat = est rates = gamma shape = est basefreq = est pinv = 0.0; 
+
+ShowTrees all ;
         
 END;

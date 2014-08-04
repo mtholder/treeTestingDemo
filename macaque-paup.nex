@@ -8,6 +8,7 @@ BEGIN PAUP;
         SaveTrees file = macaque.hky.branches.tre format = altnexus brlens ;
         Set crit = like;
         HSearch nreps = 5 addseq = rand;
+        SaveTrees file = macaque.ml.hky.tre format = altnexus brlens ;
         ShowTrees all ;
         GetTrees file = ../macaque-null.tre mode = 7;
         TreeDist ;
@@ -19,7 +20,6 @@ BEGIN PAUP;
         Generate all constraint = mm ;
         LScore all / nokhtest shtest ;
         LScore all / nokhtest noshtest autest ;
-        
     Log Stop; 
     [Quit] ;
 END;
