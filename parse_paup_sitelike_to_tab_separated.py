@@ -36,7 +36,7 @@ def parse_paup_site_like_file(inp, score_type, is_parsimony=False):
                 curr_site_ln_sum = 0.0
             curr_tree_num = int(m.group(1))
             expected_ln_like = score_type(m.group(2))
-        else:
+        elif line.strip():
             m = SITE_LIKE_PAT.match(line)
             if not m:
                 sys.exit('%s: Could not parse line %d: "%s"\n' % (SCRIPT_NAME, n + 2, line[:-1]))
